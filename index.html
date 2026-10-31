@@ -351,9 +351,50 @@ footer{overflow:visible}
 .shine.nm .twinkle,.shine.quita .twinkle{width:18px;height:18px}
 
 @media (prefers-reduced-motion:reduce){.rays,.mote,.shine::after,.twinkle{animation:none!important}.card,.st{transition:none}}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;top:0;right:0;bottom:0;left:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 42%,#5a1a26 0%,#3a1418 45%,#24100c 100%);transition:opacity .9s ease,visibility .9s;color:#E3C48C}
+#loader.done{opacity:0;visibility:hidden}
+#loader .ring{position:relative;width:150px;height:150px}
+#loader svg{position:absolute;top:0;left:0;width:150px;height:150px;transform:rotate(-90deg)}
+#loader .track{fill:none;stroke:rgba(227,196,140,.16);stroke-width:1.5}
+#loader .bar{fill:none;stroke:url(#lg);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset .5s ease}
+#loader .q{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Bodoni Moda',Didot,'Bodoni 72',Georgia,serif;font-style:italic;font-size:76px;line-height:1;padding-bottom:6px;
+  background:linear-gradient(110deg,#a8783a 0%,#f3dca6 30%,#fff6dc 42%,#c99a52 55%,#f0d49a 75%,#a8783a 100%);background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:lq 2.6s linear infinite}
+@keyframes lq{from{background-position:120% 0}to{background-position:-130% 0}}
+#loader .sp{position:absolute;width:6px;height:6px;background:#fff3cf;border-radius:50%;box-shadow:0 0 8px 2px rgba(243,220,166,.8);opacity:0;animation:lsp 2.4s ease-in-out infinite}
+@keyframes lsp{0%,100%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1)}}
+#loader .cap{margin-top:26px;font-family:'Jost',Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.42em;opacity:.85;padding-left:.42em}
+#loader .sub{margin-top:10px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:17px;opacity:.7}
 </style>
 </head>
 <body>
+<div id="loader" aria-live="polite">
+  <div class="ring">
+    <svg viewBox="0 0 150 150" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b98a48"/><stop offset=".5" stop-color="#f6e2b0"/><stop offset="1" stop-color="#c99a52"/></linearGradient></defs>
+      <circle class="track" cx="75" cy="75" r="70"/><circle class="bar" id="lbar" cx="75" cy="75" r="70"/></svg>
+    <div class="q">Q</div>
+    <i class="sp" style="left:8px;top:30px;animation-delay:.2s"></i><i class="sp" style="right:4px;top:48px;animation-delay:1.1s"></i><i class="sp" style="left:60px;bottom:-2px;animation-delay:1.8s"></i>
+  </div>
+  <div class="cap">PREPARING YOUR INVITATION</div>
+  <div class="sub">a night up high awaits&hellip;</div>
+</div>
+<script>
+(function(){var L=document.getElementById('loader'),bar=document.getElementById('lbar'),C=440;
+  var list=['env-open.webp','env-front.webp','flap-front.webp','flap-open.webp','seal.webp','invite.webp','qs.webp','fifty-five.webp','poster.jpg','fr4/001.webp'];
+  var total=list.length+1,n=0,finished=false,t0=Date.now();
+  function step(){n++;bar.style.strokeDashoffset=C*(1-Math.min(1,n/total));if(n>=total)finish();}
+  function finish(){if(finished)return;finished=true;bar.style.strokeDashoffset=0;
+    var wait=Math.max(0,1100-(Date.now()-t0));setTimeout(function(){L.classList.add('done');setTimeout(function(){L.style.display='none'},1000)},wait+350);}
+  list.forEach(function(u){var im=new Image();im.onload=im.onerror=step;im.src=u;});
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(step,step);
+  setTimeout(finish,12000); /* never trap a guest on a slow connection */
+})();
+</script>
+
 
 <div class="opener" id="opener" role="button" aria-label="Open the invitation">
   <div class="bokeh"><i style="left:12%;top:18%;width:70px;height:70px"></i><i style="left:78%;top:12%;width:110px;height:110px;animation-delay:1.5s"></i><i style="left:64%;top:72%;width:60px;height:60px;animation-delay:3s"></i><i style="left:8%;top:76%;width:90px;height:90px;animation-delay:4.2s"></i><i style="left:40%;top:6%;width:46px;height:46px;animation-delay:2.2s"></i></div>
