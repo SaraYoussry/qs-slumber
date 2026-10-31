@@ -19,7 +19,7 @@ img{display:block;max-width:100%}
 
 /* ============ 1. SCROLL FILM ============ */
 .film{position:relative;height:420vh;background:var(--merlot-deep)}
-.film-stick{position:fixed;top:0;left:0;right:0;height:100vh;overflow:hidden;-webkit-transform:translateZ(0)}
+.film-stick{position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;overflow:hidden;-webkit-transform:translateZ(0)}
 .film-stick.end{position:absolute;top:auto;bottom:0}
 .film .poster,.film canvas{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .film canvas{z-index:1}
@@ -650,8 +650,10 @@ cv.width=600;cv.height=1066;
 /* page height is only re-measured on a real width/orientation change, never when Safari's toolbar slides */
 const stick=document.querySelector('.film-stick');let lastVW=0,lockH=0;
 function viewH(){return lockH||window.innerHeight;}
+/* the LARGE viewport (toolbars hidden). iOS draws the page behind its floating bar, so the film must reach the very bottom */
+function largeVH(){try{const d=document.createElement('div');d.style.cssText='position:fixed;top:0;left:0;width:1px;visibility:hidden;pointer-events:none;height:100vh;height:100lvh';document.body.appendChild(d);const h=d.offsetHeight;d.remove();return h||0;}catch(e){return 0}}
 function sizeFilm(force){const vw=document.documentElement.clientWidth||innerWidth;if(!force&&vw===lastVW)return;lastVW=vw;
-  lockH=Math.max(window.innerHeight,document.documentElement.clientHeight||0);
+  lockH=Math.max(window.innerHeight,document.documentElement.clientHeight||0,largeVH());
   /* if a frame reports a giant height (iOS sometimes stretches frames), never exceed the real screen */
   const sh=Math.max(screen.height||0,screen.width||0);if(sh&&lockH>sh)lockH=(window.visualViewport&&visualViewport.height<=sh)?Math.round(visualViewport.height):sh;
   stick.style.height=lockH+'px';film.style.height=(lockH*4.2)+'px';drawn=-1;}
