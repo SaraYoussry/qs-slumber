@@ -691,7 +691,7 @@ document.querySelectorAll('.choice button').forEach(b=>b.onclick=()=>{b.parentNo
 function coming(){return document.querySelector('#attend button.sel')===document.querySelector('#attend button');}
 document.querySelectorAll('#attend button').forEach(b=>b.addEventListener('click',()=>{const y=coming();document.getElementById('stayq').classList.toggle('off',!y);const em=document.getElementById('emailq');em.classList.toggle('off',!y);em.querySelector('input').required=y;document.getElementById('sendb').textContent=y?'SEND MY RSVP':'SEND MY REGRETS';}));
 /* RSVP → Google Sheet (Apps Script web app). Paste the deployed /exec URL below. */
-const RSVP_URL='';
+const RSVP_URL='https://script.google.com/macros/s/AKfycbzOT6QNxcFZfxzhpcopbAZ5biVtrqtL-juU8-nV7QkfnSszPJGbalkKnzGZICpMVxIf/exec';
 function pick(id){const b=document.querySelector('#'+id+' .choice button.sel')||document.querySelector('#'+id+' button.sel');return b?b.textContent.trim():'';}
 document.getElementById('form').addEventListener('submit',async e=>{e.preventDefault();const f=e.target,y=coming(),btn=document.getElementById('sendb');
   const data=new URLSearchParams({name:f.elements['name'].value.trim(),email:y?f.elements['email'].value.trim():'',attending:y?'Yes':'No',
